@@ -60,4 +60,10 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
+  devServer: {
+    port: 7001,
+  },
+  qiankun: {
+    slave: {},
+  },
 });

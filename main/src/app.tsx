@@ -79,5 +79,46 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,
+    menu: {
+      request: async () => {
+        const menuData = [
+          { path: '/welcome', name: '欢迎' },
+          { path: '/list', name: '查询表格' },
+          {
+            path: '/admin',
+            name: '管理页',
+            routes: [{ path: '/admin/sub-page', name: '二级管理页' }],
+          },
+          { path: '/app-child/welcome', name: '子应用的欢迎' },
+          { path: '/app-child/list', name: '子应用的查询表格' },
+          {
+            path: '/app-child/admin',
+            name: '子应用的管理页',
+            routes: [{ path: 'sub-page', name: '子应用的二级管理页' }],
+          },
+        ];
+        return menuData;
+      },
+    },
   };
 };
+
+// const getApps = async () => {
+//   const apps = [
+//     {
+//       name: 'app-child', // 唯一 id
+//       entry: '//localhost:7001', // html entry
+//       routes: [
+//         {
+//           path: '/app-child',
+//           microApp: 'app-child',
+//         },
+//       ],
+//     },
+//   ];
+//   return apps;
+// };
+// export const qiankun = getApps().then((apps) => ({
+//   // 注册子应用信息
+//   apps,
+// }));

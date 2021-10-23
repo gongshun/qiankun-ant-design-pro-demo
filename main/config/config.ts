@@ -57,7 +57,17 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  mfsu: {},
   webpack5: {},
   exportStatic: {},
+  qiankun: {
+    master: {
+      // 注册子应用信息
+      apps: [
+        {
+          name: 'app-child', // 唯一 id
+          entry: '//localhost:7001', // html entry
+        },
+      ],
+    },
+  },
 });

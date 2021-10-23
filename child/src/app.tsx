@@ -49,7 +49,8 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
-  return {
+  const isQiankun: Boolean = (window as any).__POWERED_BY_QIANKUN__;
+  const config = {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
@@ -59,7 +60,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      if (!initialState?.currentUser && location.pathname !== loginPath && !isQiankun) {
         history.push(loginPath);
       }
     },
@@ -80,4 +81,25 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,
   };
+  if (isQiankun) {
+    config.menuRender = false;
+    config.headerRender = false;
+    config.footerRender = false;
+  }
+  return config;
 };
+
+// export const qiankun = {
+//   // 应用加载之前
+//   async bootstrap(props) {
+//     console.log('app1 bootstrap', props);
+//   },
+//   // 应用 render 之前触发
+//   async mount(props) {
+//     console.log('app1 mount', props);
+//   },
+//   // 应用卸载之后触发
+//   async unmount(props) {
+//     console.log('app1 unmount', props);
+//   },
+// };
